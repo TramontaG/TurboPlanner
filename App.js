@@ -1,12 +1,8 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text } from 'react-native';
+import Router from './src/router';
 
-const App = () => (
-  <View>
-    <Text>Hello, world</Text>
-    <Text>Salve Tiago</Text>
-    <Text>Salve Any</Text>
-  </View>
-)
+const App = () => <Router />
+
 export default App;

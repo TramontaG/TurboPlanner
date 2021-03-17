@@ -105,3 +105,36 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Android/IntelliJ
+build/
+.idea
+.gradle
+local.properties
+*.iml
+android/app/build/outputs/apk/debug/app-debug.apk
+android/app/build/intermediates/transforms/dexBuilder/debug/0/com/facebook/react/PackageList.dex
+android/app/build/intermediates/merged_java_res/debug/out.jar
+android/app/build/intermediates/javac/debug/classes/com/facebook/react/PackageList.class
+android/app/build/intermediates/incremental/packageDebug/tmp/debug/zip-cache/_kJzklGB_W8e0vVvz_FTLg3QtLg=
+android/app/build/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt
+android/app/build/intermediates/incremental/mergeDebugResources/merger.xml
+android/app/build/intermediates/incremental/mergeDebugResources/compile-file-map.properties
+android/app/build/intermediates/incremental/mergeDebugAssets/merger.xml
+android/app/build/intermediates/incremental/debug-mergeNativeLibs/merge-state
+android/app/build/intermediates/incremental/debug-mergeJavaRes/merge-state
+android/app/build/intermediates/external_libs_dex/debug/mergeExtDexDebug/out/classes.dex
+android/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+android/app/build/generated/rncli/src/main/java/com/facebook/react/PackageList.java
+android/.gradle/checksums/checksums.lock
+android/.gradle/buildOutputCleanup/outputFiles.bin
+android/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+android/.gradle/6.2/javaCompile/taskHistory.bin
+android/.gradle/6.2/javaCompile/javaCompile.lock
+android/.gradle/6.2/javaCompile/jarAnalysis.bin
+android/.gradle/6.2/javaCompile/classAnalysis.bin
+android/.gradle/6.2/fileHashes/resourceHashesCache.bin
+android/.gradle/6.2/fileHashes/fileHashes.lock
+android/.gradle/6.2/fileHashes/fileHashes.bin
+android/.gradle/6.2/executionHistory/executionHistory.lock
+android/.gradle/6.2/executionHistory/executionHistory.bin
