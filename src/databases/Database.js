@@ -2,9 +2,8 @@ import Realm from 'realm';
 
 class Database {
     constructor(){
-        this.DatabaseVersion = 5;
+        this.DatabaseVersion = 6;
         this._RealmInstance;
-        this.init();
     }
 
     init = async () => {
@@ -18,7 +17,7 @@ class Database {
     }
 
     useRealm = async component => {
-        component.setState({database: this.RealmInstance});
+        component.setState({database: this._RealmInstance});
         component.componentWillUnmount = async () => {
             await realm.close();
         }
@@ -28,13 +27,13 @@ class Database {
     incrementID(DB, entity){
         return DB.objects(entity).max("id") + 1 || 1
     }
-
+    
     async openRealm(){
         const config = {
             schema: Object.values(this.schemas),
             schemaVersion: this.DatabaseVersion,
         };
-        return await new Realm(config);
+        return new Realm(config);
     }
 
     schemas = {
@@ -44,6 +43,7 @@ class Database {
             properties: {
                 id: {type: 'int', indexed: true},
                 name: "string",
+                color: "string",
             }
         },
         lancamento: {

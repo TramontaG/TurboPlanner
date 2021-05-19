@@ -20,7 +20,6 @@ export default class Movimentacao extends React.Component {
     }
 
     componentDidMount = async () => {
-        await AccountManager.init();
         this.updateAccountsView();
     }
 
@@ -57,13 +56,11 @@ export default class Movimentacao extends React.Component {
                 renderItem={({item}) => <AccountInfoView accountObject={item} />}
                 keyExtractor={item => item.id.toString()}
             />
-            
-     
         </View>
     );
 
     updateAccountsView = () => {
-        this.setState({contas: AccountManager.getAccountList(this.state.database)}); 
+        this.setState({contas: AccountManager.getAllAccounts()}); 
     }
 
     setOP = op => {
