@@ -1,4 +1,4 @@
-#Tue Mar 09 17:59:49 BRT 2021
-base.0=D\:\\Projetos\\TurboPlanner\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
-path.0=classes.dex
+#Wed Jun 09 06:05:49 BRT 2021
+base.0=C\:\\Projetos\\Fatec\\TurboPlanner\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 renamed.0=classes.dex
+path.0=classes.dex

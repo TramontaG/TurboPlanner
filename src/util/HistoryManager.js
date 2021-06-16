@@ -5,44 +5,45 @@ class HistoryController {
         this.DB = DBInstance;
     }
 
-    getMovement = movementID => {
+    getMovement = (movementID) => {
         try {
-            const safeID = typeof movementID === "string" ? parseInt(movementID) : movementID;
-            const movement = this.DB.objectForPrimaryKey("lancamento", safeID);
+            const safeID =
+                typeof movementID === 'string'
+                    ? parseInt(movementID)
+                    : movementID;
+            const movement = this.DB.objectForPrimaryKey('lancamento', safeID);
             if (movement) return movement;
-            else throw "Invalid ID: No object matches the provided ID";
+            else throw 'Invalid ID: No object matches the provided ID';
         } catch (e) {
             console.warn(e);
         }
-    }
+    };
 
-    createMovement = movementInfo => {
+    createMovement = (movementInfo) => {
         try {
-            let movement = this.DB.create("lancamento", {
+            let movement = this.DB.create('lancamento', {
                 date: new Date(),
-                id: Database.incrementID(this.DB, "lancamento"),
+                id: Database.incrementID(this.DB, 'lancamento'),
                 ...movementInfo,
             });
             return movement;
         } catch (e) {
             console.warn(e);
         }
-    }
-    
-    deleteMovement = movementId => {
+    };
+
+    deleteMovement = (movementId) => {
         try {
             const movement = this.DB.getMovement(movementId);
             this.DB.write(() => {
                 this.DB.delete(movement);
             });
-            return true
+            return true;
         } catch (e) {
             console.warn(e);
             return false;
         }
-    }
-    
-    
+    };
 }
 
 export default HistoryController;

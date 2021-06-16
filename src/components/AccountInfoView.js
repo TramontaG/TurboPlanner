@@ -1,33 +1,27 @@
-import React, {useState} from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native'
+import React from 'react';
+import {Text} from 'react-native';
 
-const AccountInfo = props => {
+import {centsToReal} from './../util/Conversor';
+import GenericContainer from './GenericContainer';
+
+const AccountInfo = (props) => {
     const accountObject = props.accountObject;
-    const navigation = useNavigation();
 
-    const calculateBalance = accountObject => {
-        return accountObject.history.reduce( (acc, item) => {
+    const calculateBalance = (accountObject) => {
+        return accountObject.history.reduce((acc, item) => {
             return acc + item.value;
-        }, accountObject.balance) / 100;
-    }
-
-    const calculateMovementTotal = accountObject => {
-        return accountObject.history.reduce( (acc, item) => {
-            return acc + item.value;
-        }, 0) / 100;
-    }
+        }, accountObject.balance);
+    };
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Overview', accountObject)}>
-            <View style={{margin: 5, backgroundColor: "#BBB", borderRadius: 10, padding: 5}}>
-                <Text>Account id: {accountObject.id}</Text>
-                <Text>Account Initial Balance: {accountObject.balance}</Text>
-                <Text>Account Balance: {calculateBalance(accountObject)}</Text>
-                <Text>Account Movement Total: {calculateMovementTotal(accountObject)}</Text>
-            </View>
-        </TouchableOpacity>
-    )
-}
+        <GenericContainer visible={true}>
+            <Text>{accountObject.name}</Text>
+            <Text>
+                Saldo: R$
+                {centsToReal(calculateBalance(accountObject))}
+            </Text>
+        </GenericContainer>
+    );
+};
 
 export default AccountInfo;

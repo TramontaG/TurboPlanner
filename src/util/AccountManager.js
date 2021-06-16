@@ -1,9 +1,9 @@
-import Database from "../databases/Database";
+import Database from '../databases/Database';
 import HistoryController from './HistoryManager';
 import CategoriesManager from './CategoriesManager';
 
 class AccountManager {
-    constructor(){
+    constructor() {
         this.DB;
         this.init();
     }
@@ -12,14 +12,14 @@ class AccountManager {
         this.DB = await Database.getRealm();
         this.HistoryController = new HistoryController(this.DB);
         this.CategoriesManager = new CategoriesManager(this.DB);
-    }
-    
-    createAccount = accountData => {
+    };
+
+    createAccount = (accountData) => {
         try {
             let newAccount;
             this.DB.write(() => {
-                newAccount = this.DB.create("conta", {
-                    id: Database.incrementID(this.DB, "conta"),
+                newAccount = this.DB.create('conta', {
+                    id: Database.incrementID(this.DB, 'conta'),
                     balance: 0,
                     history: [],
                     ...accountData,
@@ -29,21 +29,21 @@ class AccountManager {
         } catch (e) {
             console.warn(e);
         }
-    }
+    };
 
     _deleteAllAccounts = () => {
         try {
             this.DB.write(() => {
-                this.DB.delete(this.DB.objects("conta"));
+                this.DB.delete(this.DB.objects('conta'));
             });
-            return true
+            return true;
         } catch (e) {
             console.warn(e);
             return false;
         }
-    }
+    };
 
-    deleteAccount = id => {
+    deleteAccount = (id) => {
         try {
             const account = this.getAccount(id);
             if (!account) return false;
@@ -54,50 +54,67 @@ class AccountManager {
         } catch (e) {
             console.warn(e);
         }
-    }
+    };
 
-    getAccount = id => {
-        const safeID = typeof id === "string" ? parseInt(id) : id;
-        const account = this.DB.objectForPrimaryKey("conta", safeID);
+    getAccount = (id) => {
+        const safeID = typeof id === 'string' ? parseInt(id) : id;
+        const account = this.DB.objectForPrimaryKey('conta', safeID);
         if (account) return account;
-        else throw "Invalid ID: No object matches the provided ID";
-    }
+        else throw 'Invalid ID: No object matches the provided ID';
+    };
 
     getAllAccounts = () => {
-        return this.DB.objects("conta");
-    }
+        return this.DB.objects('conta');
+    };
 
     insertMovement = (accountID, movementInfo) => {
         try {
             this.DB.write(() => {
                 const account = this.getAccount(accountID);
-                const movement = this.HistoryController.createMovement(movementInfo);
+                const movement =
+                    this.HistoryController.createMovement(movementInfo);
                 account.history.push(movement);
             });
         } catch (e) {
             console.warn(e);
         }
-    }
+    };
 
-    createCategory = categoryInfo => {
+    deleteMovement = (accountID, movementId) => {
         try {
-            let category
+            this.DB.write(() => {
+                const account = this.getAccount(accountID);
+                account.history.splice(
+                    account.history.indexOf(
+                        this.HistoryController.getMovement(movementId),
+                    ),
+                    1,
+                );
+            });
+        } catch (e) {
+            console.warn(e);
+        }
+    };
+
+    createCategory = (categoryInfo) => {
+        try {
+            let category;
             this.DB.write(() => {
                 category = this.CategoriesManager.createCategory({
-                    id: Database.incrementID(this.DB, "categoria"),
+                    id: Database.incrementID(this.DB, 'categoria'),
                     ...categoryInfo,
                 });
             });
-            return category
+            return category;
         } catch (e) {
             console.warn(e);
             return null;
         }
-    }
+    };
 
     getAllCategories = () => {
         return this.CategoriesManager.getAllCategories();
-    }
+    };
 
     deleteAllCategories = () => {
         try {
@@ -109,9 +126,9 @@ class AccountManager {
             console.warn(e);
             return null;
         }
-    }
+    };
 
-    getCategory = id => {
+    getCategory = (id) => {
         let cat;
         try {
             this.DB.write(() => {
@@ -122,9 +139,9 @@ class AccountManager {
             console.warn(e);
             return null;
         }
-    }
+    };
 
-    deleteCategory = id => {
+    deleteCategory = (id) => {
         try {
             const cat = this.getCategory(id);
             if (!cat) return false;
@@ -135,7 +152,7 @@ class AccountManager {
         } catch (e) {
             console.warn(e);
         }
-    }
+    };
 }
 
 export default new AccountManager();

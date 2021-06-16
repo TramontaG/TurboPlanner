@@ -1,29 +1,54 @@
-import React, {} from 'react';
-import { View, Text, Button, BackHandler, Alert, FlatList, TextInput } from 'react-native';
+import React from 'react';
+import {View, Text, BackHandler, FlatList, Button} from 'react-native';
+
+import BalanceHomeView from './../components/balanceHomeView';
+import AccountInfoView from './../components/AccountInfoView';
 
 import AccountManager from './../util/AccountManager';
-import BalanceHomeView from './../components/balanceHomeView';
-import ProgressBar from './../components/ProgressBar';
 
 export default class Home extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        BackHandler.addEventListener("hardwareBackPress", this.confirmExit);
+        props.navigation.addListener('focus', this.getAllAccounts);
         this.state = {
             balance: 0,
-            percentage: .5,
-        }
+            accountList: [],
+        };
     }
 
-
+    componentDidMount() {
+        this.getAllAccounts();
+    }
 
     render = () => (
-        <View>
+        <View style={{flex: 1, backgroundColor: '#DDE5DD'}}>
             <BalanceHomeView balance={this.state.balance} />
-            <ProgressBar percentage={this.state.percentage} />
+
+            <FlatList
+                data={this.state.accountList}
+                renderItem={({item}) => (
+                    <AccountInfoView accountObject={item} />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+            />
         </View>
     );
 
+    calculateBalance = (accountObject) => {
+        return accountObject.history.reduce((acc, item) => {
+            return acc + item.value;
+        }, accountObject.balance);
+    };
 
-
+    getAllAccounts = () => {
+        const allAccounts = AccountManager.getAllAccounts();
+        const totalBalance = allAccounts.reduce(
+            (acc, account) => acc + this.calculateBalance(account),
+            0,
+        );
+        this.setState({
+            balance: totalBalance,
+            accountList: allAccounts,
+        });
+    };
 }

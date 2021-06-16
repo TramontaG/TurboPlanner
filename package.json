@@ -12,16 +12,18 @@
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
+    "@react-native-picker/picker": "^1.16.1",
     "@react-navigation/bottom-tabs": "^5.11.8",
     "@react-navigation/native": "^5.9.2",
     "@react-navigation/stack": "^5.14.2",
-    "custom-react-native-library": "^0.1.2",
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-gesture-handler": "^1.10.1",
+    "react-native-masked-text": "^1.13.0",
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.17.1",
+    "react-native-slider-color-picker": "^2.2.2",
     "realm": "^10.2.0"
   },
   "devDependencies": {
